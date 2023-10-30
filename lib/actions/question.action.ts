@@ -1,15 +1,18 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
 import Question from "@/database/question.model";
 import Tag from "@/database/tag.model";
 import User from "@/database/user.model";
+import Answer from "@/database/answer.model";
 
 import { connectToDatabase } from "@/lib/mongoose";
 
 import type {
   CreateQuestionParams,
+  DeleteQuestionParams,
   EditQuestionParams,
   GetQuestionByIdParams,
   GetQuestionsParams,
@@ -75,6 +78,45 @@ export async function editQuestion(params: EditQuestionParams) {
     await question.save();
 
     revalidatePath(path);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function deleteQuestion(params: DeleteQuestionParams) {
+  try {
+    connectToDatabase();
+
+    const { questionId, path, isQuestionPath = false } = params;
+
+    const question = await Question.findById({ _id: questionId });
+
+    if (!question) {
+      throw new Error("Question not found");
+    }
+
+    await Question.deleteOne({ _id: questionId });
+
+    await Answer.deleteMany({ question: questionId });
+
+    // todo: delete all interactions related to the question
+
+    await Tag.updateMany(
+      { questions: questionId },
+      { $pull: { questions: questionId } }
+    );
+
+    // todo: decrement author's reputation by +S for deleting a answer
+    await User.findByIdAndUpdate(question.author, {
+      $inc: { reputation: -10 },
+    });
+
+    if (isQuestionPath) {
+      redirect("/");
+    } else {
+      revalidatePath(path);
+    }
   } catch (error) {
     console.log(error);
     throw error;
