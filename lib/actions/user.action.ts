@@ -7,6 +7,7 @@ import { connectToDatabase } from "@/lib/mongoose";
 import type {
   CreateUserParams,
   DeleteUserParams,
+  GetAllUsersParams,
   UpdateUserParams,
 } from "./shared.types";
 import Question from "@/database/question.model";
@@ -85,6 +86,19 @@ export async function getUserById(params: { userId: string }) {
     });
 
     return user;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getAllUsers(params: GetAllUsersParams) {
+  try {
+    connectToDatabase();
+
+    const users = await User.find({});
+
+    return { users };
   } catch (error) {
     console.log(error);
     throw error;
