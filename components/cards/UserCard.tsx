@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 
+import { getTopInteractedTags } from "@/lib/actions/tag.action";
+
 import { Badge } from "@/components/ui/badge";
 import RenderTag from "@/components/shared/RenderTag";
 
@@ -15,7 +17,9 @@ interface Props {
 }
 
 const UserCard = async ({ user }: Props) => {
-  const interactedTags: any = [];
+  const interactedTags: any = await getTopInteractedTags({
+    userId: user._id,
+  });
 
   return (
     <Link
