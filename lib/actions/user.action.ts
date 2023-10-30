@@ -14,6 +14,7 @@ import type {
   DeleteUserParams,
   GetAllUsersParams,
   GetSavedQuestionParams,
+  GetUserByIdParams,
   GetUserStatsParams,
   ToggleSaveQuestionParams,
   UpdateUserParams,
@@ -92,6 +93,33 @@ export async function getUserById(params: { userId: string }) {
     });
 
     return user;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getUserInfo(params: GetUserByIdParams) {
+  try {
+    connectToDatabase();
+
+    const { userId } = params;
+
+    const user = await User.findOne({ clerkId: userId });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const totalQuestions = await Question.countDocuments({ author: user._id });
+    const totalAnswers = await Answer.countDocuments({ author: user._id });
+
+    return {
+      user,
+      totalQuestions,
+      totalAnswers,
+      reputation: user.reputation,
+    };
   } catch (error) {
     console.log(error);
     throw error;
