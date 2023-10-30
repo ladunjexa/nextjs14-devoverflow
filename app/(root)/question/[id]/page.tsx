@@ -2,13 +2,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
-import { auth } from "@clerk/nextjs";
+import { SignedIn, auth } from "@clerk/nextjs";
 
 import Metric from "@/components/shared/Metric";
 import ParseHTML from "@/components/shared/ParseHTML";
 import RenderTag from "@/components/shared/RenderTag";
 import AllAnswers from "@/components/shared/AllAnswers";
 import Votes from "@/components/shared/Votes";
+import EditDeleteAction from "@/components/shared/EditDeleteAction";
 import Answer from "@/components/forms/Answer";
 
 import { getUserById } from "@/lib/actions/user.action";
@@ -31,6 +32,8 @@ const Page = async ({ params, searchParams }: URLProps) => {
 
   const result = await getQuestionById({ questionId: params.id });
   if (!result) return null;
+
+  const showActionButtons = clerkId && clerkId === result?.author.clerkId;
 
   return (
     <>
@@ -102,7 +105,14 @@ const Page = async ({ params, searchParams }: URLProps) => {
           ))}
         </div>
 
-        {/* <EditDeleteAction /> */}
+        <SignedIn>
+          {showActionButtons && (
+            <EditDeleteAction
+              type="Question"
+              itemId={JSON.stringify(result._id)}
+            />
+          )}
+        </SignedIn>
       </div>
 
       <AllAnswers

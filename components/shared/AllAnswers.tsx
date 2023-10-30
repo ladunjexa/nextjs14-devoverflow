@@ -1,9 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 
+import { SignedIn } from "@clerk/nextjs";
+
 import Filter from "@/components/shared/Filter";
 import ParseHTML from "@/components/shared/ParseHTML";
 import Votes from "@/components/shared/Votes";
+import EditDeleteAction from "@/components/shared/EditDeleteAction";
 
 import { getAnswers } from "@/lib/actions/answer.action";
 import { getTimestamp } from "@/lib/utils";
@@ -34,6 +37,9 @@ const AllAnswers = async ({ userId, questionId, totalAnswers }: Props) => {
       </div>
       <div>
         {result.answers.map((answer: any) => {
+          const showActionButtons =
+            JSON.stringify(userId) === JSON.stringify(answer.author._id);
+
           return (
             <article key={answer._id} className="light-border border-b py-10">
               <div className="mb-8 flex flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
@@ -72,7 +78,14 @@ const AllAnswers = async ({ userId, questionId, totalAnswers }: Props) => {
               </div>
               <ParseHTML data={answer.content} />
 
-              {/* <EditDeleteAction /> */}
+              <SignedIn>
+                {showActionButtons && (
+                  <EditDeleteAction
+                    type="Answer"
+                    itemId={JSON.stringify(answer._id)}
+                  />
+                )}
+              </SignedIn>
             </article>
           );
         })}

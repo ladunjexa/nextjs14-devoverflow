@@ -1,6 +1,9 @@
 import Link from "next/link";
 
+import { SignedIn } from "@clerk/nextjs";
+
 import Metric from "@/components/shared/Metric";
+import EditDeleteAction from "@/components/shared/EditDeleteAction";
 
 import { getFormattedNumber, getTimestamp } from "@/lib/utils";
 
@@ -29,6 +32,8 @@ const AnswerCard = ({
   upvotes,
   createdAt,
 }: Props) => {
+  const showActionButtons = clerkId && clerkId === author.clerkId;
+
   return (
     <Link
       href={`/question/${question._id}/#${_id}`}
@@ -44,7 +49,11 @@ const AnswerCard = ({
           </h3>
         </div>
 
-        {/* <EditDeleteAction /> */}
+        <SignedIn>
+          {showActionButtons && (
+            <EditDeleteAction type="Answer" itemId={JSON.stringify(_id)} />
+          )}
+        </SignedIn>
       </div>
 
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
