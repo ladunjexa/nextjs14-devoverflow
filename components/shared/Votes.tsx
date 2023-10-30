@@ -1,10 +1,11 @@
 "use client";
 
+import { useEffect } from "react";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { upvoteAnswer, downvoteAnswer } from "@/lib/actions/answer.action";
-
+import { viewQuestion } from "@/lib/actions/interaction.action";
 import {
   downvoteQuestion,
   upvoteQuestion,
@@ -32,7 +33,15 @@ const Votes = ({
   hasdownVoted,
   hasSaved,
 }: Props) => {
+  const router = useRouter();
   const pathname = usePathname();
+
+  useEffect(() => {
+    viewQuestion({
+      questionId: JSON.parse(itemId),
+      userId: userId ? JSON.parse(userId) : undefined,
+    });
+  }, [itemId, userId, pathname, router]);
 
   const handleSave = async () => {
     await toggleSaveQuestion({
