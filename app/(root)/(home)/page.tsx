@@ -7,12 +7,12 @@ import NoResult from "@/components/shared/NoResult";
 import HomeFilters from "@/components/home/HomeFilters";
 import QuestionCard from "@/components/cards/QuestionCard";
 
+import { getQuestions } from "@/lib/actions/question.action";
+
 import { HomePageFilters } from "@/constants/filters";
 
 export default async function Home() {
-  const result = {
-    questions: [],
-  };
+  const result = await getQuestions({});
 
   return (
     <>
