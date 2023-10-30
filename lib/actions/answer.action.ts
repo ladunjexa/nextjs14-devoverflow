@@ -14,6 +14,7 @@ import type {
   CreateAnswerParams,
   DeleteAnswerParams,
   EditAnswerParams,
+  GetAnswerByIdParams,
   GetAnswersParams,
 } from "./shared.types";
 
@@ -111,6 +112,24 @@ export async function getAnswers(params: GetAnswersParams) {
     );
 
     return { answers };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getAnswerById(params: GetAnswerByIdParams) {
+  try {
+    connectToDatabase();
+
+    const { answerId } = params;
+
+    const answer = await Answer.findById(answerId).populate(
+      "author",
+      "_id clerkId name picture"
+    );
+
+    return answer;
   } catch (error) {
     console.log(error);
     throw error;
