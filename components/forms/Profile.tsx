@@ -32,6 +32,7 @@ const Profile = ({ clerkId, user }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
   const parsedUser = JSON.parse(user);
+
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof ProfileValidation>>({
@@ -61,6 +62,7 @@ const Profile = ({ clerkId, user }: Props) => {
         },
         path: pathname,
       });
+
       router.push("/");
     } catch (error) {
       toast({
