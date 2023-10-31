@@ -9,7 +9,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
 
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormField,
@@ -17,6 +16,8 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 
 import { useTheme } from "@/context/ThemeProvider";
 
@@ -82,10 +83,22 @@ const Answer = ({
         editor.setContent("");
       }
     } catch (error) {
+      toast({
+        title: `Error ${type === "Edit" ? "editing" : "submitting"} answer ⚠️`,
+        variant: "destructive",
+      });
+
       console.log(error);
       throw error;
     } finally {
       setIsSubmitting(false);
+
+      toast({
+        title: `Answer ${
+          type === "Edit" ? "edited" : "submitted"
+        } successfully 🎉`,
+        variant: "default",
+      });
     }
   }
 
@@ -114,10 +127,20 @@ const Answer = ({
         editor.setContent(formattedAiAnswer);
       }
     } catch (error: any) {
+      toast({
+        title: "Error generating AI answer ⚠️",
+        variant: "destructive",
+      });
+
       console.log(error);
       throw error;
     } finally {
       setIsSubmittingAi(false);
+
+      toast({
+        title: "AI answer generated successfully 🎉",
+        variant: "default",
+      });
     }
   };
 

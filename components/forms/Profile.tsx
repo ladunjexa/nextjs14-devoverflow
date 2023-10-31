@@ -18,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/components/ui/use-toast";
 
 import { updateUser } from "@/lib/actions/user.action";
 import { ProfileValidation } from "@/lib/validations";
@@ -62,9 +63,19 @@ const Profile = ({ clerkId, user }: Props) => {
       });
       router.back();
     } catch (error) {
+      toast({
+        title: "Error updating profile ⚠️",
+        variant: "destructive",
+      });
+
       console.log(error);
     } finally {
       setIsSubmitting(false);
+
+      toast({
+        title: "Profile updated successfully 🎉",
+        variant: "default",
+      });
     }
   }
 

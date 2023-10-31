@@ -10,6 +10,8 @@ import { HomePageFilters } from "@/constants/filters";
 const HomeFilters = () => {
   const [active, setActive] = useState<string>("");
 
+  // todo: implement home filters functionality
+
   return (
     <div className="mt-10 flex-wrap gap-3 md:flex">
       {HomePageFilters.map((filter) => (
