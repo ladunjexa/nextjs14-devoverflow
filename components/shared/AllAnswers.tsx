@@ -6,6 +6,7 @@ import { SignedIn } from "@clerk/nextjs";
 import Filter from "@/components/shared/Filter";
 import ParseHTML from "@/components/shared/ParseHTML";
 import Votes from "@/components/shared/Votes";
+import Pagination from "@/components/shared/Pagination";
 import EditDeleteAction from "@/components/shared/EditDeleteAction";
 
 import { getAnswers } from "@/lib/actions/answer.action";
@@ -29,10 +30,12 @@ const AllAnswers = async ({
   questionId,
   totalAnswers,
   filter,
+  page,
 }: Props) => {
   const result = await getAnswers({
     questionId,
     sortBy: filter,
+    page,
   });
 
   return (
@@ -95,6 +98,10 @@ const AllAnswers = async ({
             </article>
           );
         })}
+      </div>
+
+      <div className="mt-10 w-full">
+        <Pagination pageNumber={page ? +page : 1} isNext={result.isNext} />
       </div>
     </div>
   );

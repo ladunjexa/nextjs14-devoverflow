@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import Filter from "@/components/shared/Filter";
 import NoResult from "@/components/shared/NoResult";
+import Pagination from "@/components/shared/Pagination";
 import QuestionCard from "@/components/cards/QuestionCard";
 
 import { getSavedQuestions } from "@/lib/actions/user.action";
@@ -20,6 +21,7 @@ export default async function Collection({ searchParams }: SearchParamsProps) {
     clerkId,
     searchQuery: searchParams.q,
     filter: searchParams.filter,
+    page: searchParams.page ? +searchParams.page : 1,
   });
 
   return (
@@ -64,6 +66,13 @@ export default async function Collection({ searchParams }: SearchParamsProps) {
             linkTitle="Explore Questions"
           />
         )}
+      </div>
+
+      <div className="mt-10">
+        <Pagination
+          pageNumber={searchParams?.page ? +searchParams.page : 1}
+          isNext={result.isNext}
+        />
       </div>
     </>
   );

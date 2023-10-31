@@ -1,3 +1,4 @@
+import Pagination from "@/components/shared/Pagination";
 import QuestionCard from "@/components/cards/QuestionCard";
 
 import { getUserQuestions } from "@/lib/actions/user.action";
@@ -31,6 +32,13 @@ const QuestionsTab = async ({ searchParams, userId, clerkId }: Props) => {
           createdAt={question.createdAt}
         />
       ))}
+
+      <div className="mt-10">
+        <Pagination
+          pageNumber={searchParams?.page ? +searchParams.page : 1}
+          isNext={result.isNext}
+        />
+      </div>
     </>
   );
 };
