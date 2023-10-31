@@ -15,6 +15,11 @@ import { getQuestions } from "@/lib/actions/question.action";
 import { HomePageFilters } from "@/constants/filters";
 
 import type { SearchParamsProps } from "@/types";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home — DevOverflow",
+};
 
 export default async function Home({ searchParams }: SearchParamsProps) {
   const { userId: clerkId } = auth();

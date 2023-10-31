@@ -7,6 +7,11 @@ import Answer from "@/components/forms/Answer";
 import { getAnswerById } from "@/lib/actions/answer.action";
 
 import type { ParamsProps } from "@/types";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Edit Answer — DevOverflow",
+};
 
 const Page = async ({ params }: ParamsProps) => {
   const { userId } = auth();

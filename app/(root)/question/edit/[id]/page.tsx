@@ -6,6 +6,11 @@ import { getQuestionById } from "@/lib/actions/question.action";
 import { getUserById } from "@/lib/actions/user.action";
 
 import type { ParamsProps } from "@/types";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Edit Question — DevOverflow",
+};
 
 const Page = async ({ params }: ParamsProps) => {
   const { userId } = auth();

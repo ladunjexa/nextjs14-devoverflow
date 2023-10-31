@@ -9,6 +9,11 @@ import { getAllUsers } from "@/lib/actions/user.action";
 import { UserFilters } from "@/constants/filters";
 
 import type { SearchParamsProps } from "@/types";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Community — DevOverflow",
+};
 
 const Page = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllUsers({

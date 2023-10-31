@@ -5,6 +5,11 @@ import Profile from "@/components/forms/Profile";
 import { getUserById } from "@/lib/actions/user.action";
 
 import type { ParamsProps } from "@/types";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Edit Profile — DevOverflow",
+};
 
 const Page = async ({ params }: ParamsProps) => {
   const { userId } = auth();

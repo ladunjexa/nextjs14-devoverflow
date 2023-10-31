@@ -18,6 +18,17 @@ import { getQuestionById } from "@/lib/actions/question.action";
 import { getFormattedNumber, getTimestamp } from "@/lib/utils";
 
 import type { URLProps } from "@/types";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: Omit<URLProps, "searchParams">): Promise<Metadata> {
+  const question = await getQuestionById({ questionId: params.id });
+
+  return {
+    title: `"${question.title}" — DevOverflow`,
+  };
+}
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const { userId: clerkId } = auth();
