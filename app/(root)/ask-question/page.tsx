@@ -10,9 +10,7 @@ export const metadata: Metadata = {
   title: "Ask a Question — DevOverflow",
 };
 
-type Props = {};
-
-const Page = async (props: Props) => {
+const Page = async () => {
   const { userId } = auth();
 
   if (!userId) return null;

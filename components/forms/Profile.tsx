@@ -37,11 +37,11 @@ const Profile = ({ clerkId, user }: Props) => {
   const form = useForm<z.infer<typeof ProfileValidation>>({
     resolver: zodResolver(ProfileValidation),
     defaultValues: {
-      name: parsedUser.name || "",
-      username: parsedUser.username || "",
-      portfolioWebsite: parsedUser.portfolioWebsite || "",
-      location: parsedUser.location || "",
-      bio: parsedUser.bio || "",
+      name: parsedUser?.name || "",
+      username: parsedUser?.username || "",
+      portfolioWebsite: parsedUser?.portfolioWebsite || "",
+      location: parsedUser?.location || "",
+      bio: parsedUser?.bio || "",
     },
   });
 
@@ -61,7 +61,7 @@ const Profile = ({ clerkId, user }: Props) => {
         },
         path: pathname,
       });
-      router.back();
+      router.push("/");
     } catch (error) {
       toast({
         title: "Error updating profile ⚠️",
