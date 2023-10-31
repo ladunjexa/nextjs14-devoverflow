@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import Answer from "@/database/answer.model";
 import Question from "@/database/question.model";
 import User from "@/database/user.model";
+import Interaction from "@/database/interaction.model";
 
 import { connectToDatabase } from "@/lib/mongoose";
 
@@ -32,13 +33,21 @@ export async function createAnswer(params: CreateAnswerParams) {
     });
 
     // add the answer to the question's answers array
-    await Question.findByIdAndUpdate(question, {
+    const questionObj = await Question.findByIdAndUpdate(question, {
       $push: { answers: newAnswer._id },
     });
 
-    // todo: create an interaction record for the user's create_answer action
+    // create an interaction record for the user's create_answer action
+    await Interaction.create({
+      user: author,
+      action: "answer",
+      question,
+      answer: newAnswer._id,
+      tags: questionObj.tag,
+    });
 
-    // todo: author's reputation by +S for creating a answer
+    // increment author's reputation by +S for creating a answer
+    await User.findByIdAndUpdate(author, { $inc: { reputation: 10 } });
 
     revalidatePath(path);
   } catch (error) {

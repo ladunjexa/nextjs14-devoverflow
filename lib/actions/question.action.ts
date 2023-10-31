@@ -9,6 +9,7 @@ import Question from "@/database/question.model";
 import Tag from "@/database/tag.model";
 import User from "@/database/user.model";
 import Answer from "@/database/answer.model";
+import Interaction from "@/database/interaction.model";
 
 import { connectToDatabase } from "@/lib/mongoose";
 
@@ -35,9 +36,16 @@ export async function createQuestion(params: CreateQuestionParams) {
     });
 
     const tagDocuments = [];
+    let newTagsCounter = 0;
 
     // create the tags or get them if they already exist
     for (const tag of tags) {
+      const isTagAlreadyExist = await Tag.exists({
+        name: { $regex: new RegExp(`^${tag}$`, "i") },
+      });
+
+      if (!isTagAlreadyExist) newTagsCounter++;
+
       const existingTag = await Tag.findOneAndUpdate(
         { name: { $regex: new RegExp(`^${tag}$`, "i") } },
         { $setOnInsert: { name: tag }, $push: { questions: question._id } },
@@ -51,9 +59,23 @@ export async function createQuestion(params: CreateQuestionParams) {
       $push: { tags: { $each: tagDocuments } },
     });
 
-    // todo: create an interaction record for the user's ask_question action
+    // create an interaction record for the user's ask_question action
+    await Interaction.create({
+      user: author,
+      action: "ask_question",
+      question: question._id,
+      tags: tagDocuments,
+    });
 
-    // todo: increment author's reputation by +S for creating a question
+    // increment author's reputation by +S for creating a question
+    await User.findByIdAndUpdate(author, { $inc: { reputation: 5 } });
+
+    // increment user's reputation by +S for creating a new tag (S = 3)
+    if (newTagsCounter > 0) {
+      await User.findByIdAndUpdate(author, {
+        $inc: { reputation: newTagsCounter * 3 },
+      });
+    }
 
     revalidatePath(path);
   } catch (error) {
@@ -189,11 +211,11 @@ export async function getQuestions(params: GetQuestionsParams) {
       .skip(skipAmount)
       .limit(pageSize);
 
-      const totalQuestions = await Question.countDocuments(query);
+    const totalQuestions = await Question.countDocuments(query);
 
-      const isNext = totalQuestions > skipAmount + questions.length;
-  
-      return { questions, isNext };
+    const isNext = totalQuestions > skipAmount + questions.length;
+
+    return { questions, isNext };
   } catch (error) {
     console.log(error);
     throw error;
