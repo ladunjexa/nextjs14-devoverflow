@@ -24,9 +24,15 @@ interface Props extends QuestionId, UserId, OptionalPage, OptionalFilter {
   totalAnswers: number;
 }
 
-const AllAnswers = async ({ userId, questionId, totalAnswers }: Props) => {
+const AllAnswers = async ({
+  userId,
+  questionId,
+  totalAnswers,
+  filter,
+}: Props) => {
   const result = await getAnswers({
     questionId,
+    sortBy: filter,
   });
 
   return (
