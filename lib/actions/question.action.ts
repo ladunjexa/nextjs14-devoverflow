@@ -125,14 +125,13 @@ export async function deleteQuestion(params: DeleteQuestionParams) {
 
     await Answer.deleteMany({ question: questionId });
 
-    // todo: delete all interactions related to the question
+    await Interaction.deleteMany({ question: questionId });
 
     await Tag.updateMany(
       { questions: questionId },
       { $pull: { questions: questionId } }
     );
 
-    // todo: decrement author's reputation by +S for deleting a answer
     await User.findByIdAndUpdate(question.author, {
       $inc: { reputation: -10 },
     });

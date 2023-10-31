@@ -98,9 +98,7 @@ export async function deleteAnswer(params: DeleteAnswerParams) {
       { $pull: { answers: answerId } }
     );
 
-    // todo: delete all interactions related to the answer
-
-    // todo: decrement author's reputation by +S for deleting a answer
+    await Interaction.deleteMany({ answer: answerId });
 
     revalidatePath(path);
   } catch (error) {
