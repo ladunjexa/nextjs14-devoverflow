@@ -8,11 +8,12 @@ import { getQuestionsByTagId } from "@/lib/actions/tag.action";
 
 import type { URLProps } from "@/types";
 
-const Page = async ({ params }: Omit<URLProps, "searchParams">) => {
+const Page = async ({ params, searchParams }: URLProps) => {
   const { userId: clerkId } = auth();
 
   const result = await getQuestionsByTagId({
     tagId: params.id,
+    searchQuery: searchParams.q,
   });
 
   return (

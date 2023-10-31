@@ -7,8 +7,12 @@ import { getAllUsers } from "@/lib/actions/user.action";
 
 import { UserFilters } from "@/constants/filters";
 
-const Page = async () => {
-  const result = await getAllUsers({});
+import type { SearchParamsProps } from "@/types";
+
+const Page = async ({ searchParams }: SearchParamsProps) => {
+  const result = await getAllUsers({
+    searchQuery: searchParams.q,
+  });
 
   return (
     <>

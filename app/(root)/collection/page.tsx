@@ -9,13 +9,16 @@ import { getSavedQuestions } from "@/lib/actions/user.action";
 
 import { QuestionFilters } from "@/constants/filters";
 
-export default async function Home() {
+import type { SearchParamsProps } from "@/types";
+
+export default async function Collection({ searchParams }: SearchParamsProps) {
   const { userId: clerkId } = auth();
 
   if (!clerkId) return null;
 
   const result = await getSavedQuestions({
     clerkId,
+    searchQuery: searchParams.q,
   });
 
   return (

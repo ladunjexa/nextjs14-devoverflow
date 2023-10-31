@@ -10,21 +10,10 @@ import Stats from "@/components/shared/Stats";
 import AnswersTab from "@/components/shared/AnswersTab";
 import QuestionsTab from "@/components/shared/QuestionsTab";
 
-import { getUserById, getUserInfo } from "@/lib/actions/user.action";
+import { getUserInfo } from "@/lib/actions/user.action";
 import { getFormattedJoinedDate } from "@/lib/utils";
 
 import type { URLProps } from "@/types";
-import type { Metadata } from "next";
-
-export async function generateMetadata({
-  params,
-}: Omit<URLProps, "searchParams">): Promise<Metadata> {
-  const user = await getUserById({ userId: params.id });
-
-  return {
-    title: `${user.username}'s Profile — DevOverflow`,
-  };
-}
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const { userId: clerkId } = auth();

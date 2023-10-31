@@ -8,8 +8,12 @@ import { getAllTags } from "@/lib/actions/tag.action";
 
 import { TagFilters } from "@/constants/filters";
 
-const Page = async () => {
-  const result = await getAllTags({});
+import type { SearchParamsProps } from "@/types";
+
+const Page = async ({ searchParams }: SearchParamsProps) => {
+  const result = await getAllTags({
+    searchQuery: searchParams.q,
+  });
 
   return (
     <>

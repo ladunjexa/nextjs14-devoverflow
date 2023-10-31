@@ -13,10 +13,14 @@ import { getQuestions } from "@/lib/actions/question.action";
 
 import { HomePageFilters } from "@/constants/filters";
 
-export default async function Home() {
+import type { SearchParamsProps } from "@/types";
+
+export default async function Home({ searchParams }: SearchParamsProps) {
   const { userId: clerkId } = auth();
 
-  const result = await getQuestions({});
+  const result = await getQuestions({
+    searchQuery: searchParams.q,
+  });
 
   return (
     <>
