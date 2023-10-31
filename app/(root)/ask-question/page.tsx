@@ -1,4 +1,5 @@
 import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 import Question from "@/components/forms/Question";
 
@@ -17,6 +18,7 @@ const Page = async (props: Props) => {
   if (!userId) return null;
 
   const mongoUser = await getUserById({ userId });
+  if (!mongoUser?.onboarded) redirect("/onboarding");
 
   return (
     <div>

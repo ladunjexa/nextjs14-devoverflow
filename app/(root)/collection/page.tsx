@@ -1,4 +1,5 @@
 import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import Filter from "@/components/shared/Filter";
@@ -6,7 +7,7 @@ import NoResult from "@/components/shared/NoResult";
 import Pagination from "@/components/shared/Pagination";
 import QuestionCard from "@/components/cards/QuestionCard";
 
-import { getSavedQuestions } from "@/lib/actions/user.action";
+import { getSavedQuestions, getUserById } from "@/lib/actions/user.action";
 
 import { QuestionFilters } from "@/constants/filters";
 
@@ -21,6 +22,9 @@ export default async function Collection({ searchParams }: SearchParamsProps) {
   const { userId: clerkId } = auth();
 
   if (!clerkId) return null;
+
+  const mongoUser = await getUserById({ userId: clerkId });
+  if (!mongoUser?.onboarded) redirect("/onboarding");
 
   const result = await getSavedQuestions({
     clerkId,

@@ -1,9 +1,9 @@
-import { redirect } from "next/navigation";
-
 import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 import Answer from "@/components/forms/Answer";
 
+import { getUserById } from "@/lib/actions/user.action";
 import { getAnswerById } from "@/lib/actions/answer.action";
 
 import type { ParamsProps } from "@/types";
@@ -17,6 +17,9 @@ const Page = async ({ params }: ParamsProps) => {
   const { userId } = auth();
 
   if (!userId) return null;
+
+  const mongoUser = await getUserById({ userId });
+  if (!mongoUser?.onboarded) redirect("/onboarding");
 
   const result = await getAnswerById({ answerId: params.id });
 
