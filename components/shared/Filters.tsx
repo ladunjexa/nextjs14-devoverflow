@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button";
 
 import { formUrlQuery } from "@/lib/utils";
 
-import { HomePageFilters } from "@/constants/filters";
+import type { FilterProps } from "@/types";
 
-const HomeFilters = () => {
+const Filters = ({ filters }: { filters: FilterProps[] }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -41,7 +41,7 @@ const HomeFilters = () => {
 
   return (
     <div className="mt-10 flex-wrap gap-3 md:flex">
-      {HomePageFilters.map((filter) => (
+      {filters.map((filter) => (
         <Button
           key={filter.value}
           onClick={() => handleTypeClick(filter.value)}
@@ -58,4 +58,4 @@ const HomeFilters = () => {
   );
 };
 
-export default HomeFilters;
+export default Filters;

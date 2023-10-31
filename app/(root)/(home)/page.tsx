@@ -7,7 +7,7 @@ import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import Filter from "@/components/shared/Filter";
 import NoResult from "@/components/shared/NoResult";
 import Pagination from "@/components/shared/Pagination";
-import HomeFilters from "@/components/home/HomeFilters";
+import HomeFilters from "@/components/shared/Filters";
 import QuestionCard from "@/components/cards/QuestionCard";
 
 import {
@@ -78,7 +78,7 @@ export default async function Home({ searchParams }: SearchParamsProps) {
         />
       </div>
 
-      <HomeFilters />
+      <HomeFilters filters={HomePageFilters} />
 
       <div className="mt-10 flex w-full flex-col gap-6">
         {result.questions.length > 0 ? (

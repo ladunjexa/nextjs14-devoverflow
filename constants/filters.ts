@@ -35,6 +35,13 @@ export const HomePageFilters: FilterProps[] = [
   { name: "Unanswered", value: "unanswered" },
 ];
 
+export const JobPageFilters: FilterProps[] = [
+  { name: "Full-time", value: "fulltime" },
+  { name: "Part-time", value: "parttime" },
+  { name: "Contractor", value: "contractor" },
+  { name: "Internship", value: "intern" },
+];
+
 export const GlobalSearchFilters: FilterProps[] = [
   { name: "Question", value: "question" },
   { name: "Answer", value: "answer" },
