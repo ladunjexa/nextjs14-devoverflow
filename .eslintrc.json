@@ -4,5 +4,6 @@
     "standard",
     "plugin:tailwindcss/recommended",
     "prettier"
-  ]
+  ],
+  "ignorePatterns": ["/components/ui/*"]
 }
