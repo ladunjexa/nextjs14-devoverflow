@@ -1,4 +1,5 @@
-import { promises as fs } from "fs";
+import { readFileSync } from "fs";
+import path from "path";
 
 import type { GetJobsParams } from "./shared.types";
 
@@ -16,14 +17,12 @@ export async function getJobs(params: GetJobsParams) {
     // Calculate the number of jobs to skip based on the page number and page size
     const skipAmount = (page - 1) * pageSize;
 
-    const file = await fs.readFile(
-      process.cwd() + "/content/jsearch.json",
-      "utf8"
-    );
+    const file = path.join(process.cwd(), "content", "jsearch.json");
+    const fileSync = readFileSync(file, "utf8");
 
-    const parsedFile = JSON.parse(file);
+    const jsonData = JSON.parse(fileSync);
 
-    const allJobs = parsedFile?.data || [];
+    const allJobs = jsonData.data || [];
 
     const searchQueryRegExp = new RegExp(
       (searchQuery || "").toLowerCase(),
@@ -83,14 +82,12 @@ export async function getJobs(params: GetJobsParams) {
 
 export async function getCountryFilters() {
   try {
-    const file = await fs.readFile(
-      process.cwd() + "/content/countries.json",
-      "utf8"
-    );
+    const file = path.join(process.cwd(), "content", "countries.json");
+    const fileSync = readFileSync(file, "utf8");
 
-    const parsedFile = JSON.parse(file);
+    const jsonData = JSON.parse(fileSync);
 
-    const result = parsedFile.map((country: any) => ({
+    const result = jsonData.map((country: any) => ({
       name: country.name,
       value: country.cca2,
     }));
