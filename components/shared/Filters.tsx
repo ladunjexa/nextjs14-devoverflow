@@ -47,8 +47,8 @@ const Filters = ({
   };
 
   return (
-    <div className="mt-10 flex-wrap gap-3 md:flex">
-      {filters.map((filter) => (
+    <div className="mt-10 flex flex-wrap-reverse gap-3 md:flex-wrap">
+      {filters.map((filter, index) => (
         <Button
           key={filter.value}
           onClick={() => handleTypeClick(filter.value)}
@@ -56,7 +56,9 @@ const Filters = ({
             active === filter.value
               ? "bg-primary-100 text-primary-500 dark:bg-dark-400 dark:hover:bg-dark-400"
               : "bg-light-800 text-light-500 hover:bg-light-800 dark:bg-dark-300 dark:text-light-500 dark:hover:bg-dark-300"
-          }`}
+          }
+          ${index !== filters.length - 1 && "mb-1 mr-1 md:mb-0 md:mr-0"}
+          `}
         >
           {filter.name}
         </Button>
