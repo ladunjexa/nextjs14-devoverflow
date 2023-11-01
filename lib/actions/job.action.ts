@@ -53,7 +53,7 @@ export async function getJobs(params: GetJobsParams) {
       case "contractor":
         filterOptions = { job_employment_type: "CONTRACTOR" };
         break;
-      case "internship":
+      case "intern":
         filterOptions = { job_employment_type: "INTERN" };
         break;
       default:
