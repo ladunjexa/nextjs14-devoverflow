@@ -1,5 +1,3 @@
-"use server";
-
 import { promises as fs } from "fs";
 
 import type { GetJobsParams } from "./shared.types";
