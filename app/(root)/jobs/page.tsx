@@ -4,7 +4,6 @@ import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import JobFilters from "@/components/shared/Filters";
 import NoResult from "@/components/shared/NoResult";
 import Pagination from "@/components/shared/Pagination";
-import Switcher from "@/components/shared/Switcher";
 import JobCard from "@/components/cards/JobCard";
 
 import { getCountryFilters, getJobs } from "@/lib/actions/job.action";
@@ -22,14 +21,13 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
     location: searchParams.location,
     remote: searchParams.remote,
     page: searchParams.page ? +searchParams.page : 1,
+    wage: searchParams.wage,
+    skills: searchParams.skills,
   });
 
   return (
     <>
-      <div className="flex flex-row items-center">
-        <h1 className="h1-bold text-dark100_light900">Jobs</h1>
-        <Switcher />
-      </div>
+      <h1 className="h1-bold text-dark100_light900">Jobs</h1>
 
       <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearchbar
@@ -48,7 +46,7 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
         )}
       </div>
 
-      <JobFilters filters={JobPageFilters} />
+      <JobFilters filters={JobPageFilters} jobFilter />
 
       <div className="mt-10 flex w-full flex-col gap-6">
         {result.data.length > 0 ? (
@@ -78,12 +76,10 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
           ))
         ) : (
           <NoResult
-            title="No Questions Found"
-            description="Be the first to break the silence! 🚀 Ask a Question and kickstart the
-          discussion. our query could be the next big thing others learn from. Get
-          involved! 💡"
-            link="/ask-question"
-            linkTitle="Ask a Question"
+            title="No Jobs Found"
+            description="We couldn't find any jobs matching your search 🤔"
+            link="/jobs"
+            linkTitle="Explore Jobs"
           />
         )}
       </div>

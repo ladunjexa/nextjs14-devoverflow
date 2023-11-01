@@ -11,6 +11,8 @@ export async function getJobs(params: GetJobsParams) {
       filter,
       location,
       remote,
+      wage,
+      skills,
       searchQuery,
     } = params;
 
@@ -35,7 +37,10 @@ export async function getJobs(params: GetJobsParams) {
         job &&
         searchQueryRegExp.test(job.job_title) &&
         locationRegExp.test(job.job_country) &&
-        (remote ? job.job_is_remote === true : true)
+        (!remote || job.job_is_remote === true) &&
+        (!wage ||
+          (job.job_min_salary !== null && job.job_max_salary !== null)) &&
+        (!skills || job.job_required_skills)
       );
     });
 

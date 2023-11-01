@@ -73,6 +73,8 @@ export interface GetAllUsersParams extends Searchable {}
 export interface GetJobsParams extends Searchable {
   location?: string;
   remote?: boolean | string;
+  wage?: boolean | string;
+  skills?: boolean | string;
 }
 
 export interface UpdateUserParams extends ClerkId, Path {

@@ -4,12 +4,19 @@ import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
+import Switcher from "@/components/shared/Switcher";
 
 import { formUrlQuery } from "@/lib/utils";
 
 import type { FilterProps } from "@/types";
 
-const Filters = ({ filters }: { filters: FilterProps[] }) => {
+const Filters = ({
+  filters,
+  jobFilter = false,
+}: {
+  filters: FilterProps[];
+  jobFilter: boolean;
+}) => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -54,6 +61,14 @@ const Filters = ({ filters }: { filters: FilterProps[] }) => {
           {filter.name}
         </Button>
       ))}
+
+      {jobFilter && (
+        <div className="background-light800_dark300 mt-2 flex items-center rounded-lg px-3 py-2 shadow-none md:mt-0">
+          <Switcher query="remote" label="Remote Only" />
+          <Switcher query="wage" label="TBA" />
+          <Switcher query="skills" label="Skills" />
+        </div>
+      )}
     </div>
   );
 };

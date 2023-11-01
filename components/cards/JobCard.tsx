@@ -84,7 +84,7 @@ const JobCard = ({
                 <h4 className="paragraph-medium text-dark400_light700">
                   {employerName}
                 </h4>
-                <p className="body-regular text-light-500">
+                <p className="body-regular mt-0.5 capitalize text-light-500">
                   posted {getTimestamp(new Date(postedAt))}
                 </p>
               </div>
@@ -134,7 +134,12 @@ const JobCard = ({
                 textStyles="small-medium text-light-500"
               />
             </div>
-            <Link href={applyLink || "/"} className="flex items-center gap-2">
+            <Link
+              href={applyLink || "/"}
+              className="flex items-center gap-2"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <p className="body-semibold primary-text-gradient">View job</p>
               <Image
                 alt="arrow up right"

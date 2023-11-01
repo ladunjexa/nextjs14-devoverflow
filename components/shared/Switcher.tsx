@@ -8,18 +8,15 @@ import { Switch } from "@/components/ui/switch";
 import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
 
 interface Props {
-  searchParamKey?: string;
-  label?: string;
+  query: string;
+  label: string;
 }
 
-const Switcher = ({
-  searchParamKey = "remote",
-  label = "Remote jobs only",
-}: Props) => {
+const Switcher = ({ query, label }: Props) => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const paramFilter = searchParams.get(searchParamKey);
+  const paramFilter = searchParams.get(query);
 
   const handleUpdateParams = (value: string) => {
     let newUrl;
@@ -27,12 +24,12 @@ const Switcher = ({
     if (!value) {
       newUrl = removeKeysFromQuery({
         params: searchParams.toString(),
-        keysToRemove: [searchParamKey],
+        keysToRemove: [query],
       });
     } else {
       newUrl = formUrlQuery({
         params: searchParams.toString(),
-        key: searchParamKey,
+        key: query,
         value,
       });
     }
@@ -43,13 +40,13 @@ const Switcher = ({
   return (
     <>
       <Switch
-        id="remote-only"
+        id={`${query}-switcher`}
         className="ml-4 mr-2"
         checked={paramFilter === "true"}
         // @ts-expect-error
         onCheckedChange={handleUpdateParams}
       />
-      <Label htmlFor="remote-only" className="text-light-500">
+      <Label htmlFor={`${query}-switcher`} className="text-light-500">
         {label}
       </Label>
     </>
