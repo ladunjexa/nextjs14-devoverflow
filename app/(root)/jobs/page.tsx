@@ -11,6 +11,11 @@ import { getCountryFilters, getJobs } from "@/lib/actions/job.action";
 import { JobPageFilters } from "@/constants/filters";
 
 import type { SearchParamsProps } from "@/types";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Jobs — DevOverflow",
+};
 
 const Page = async ({ searchParams }: SearchParamsProps) => {
   const CountryFilters = await getCountryFilters();
