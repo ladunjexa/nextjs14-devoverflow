@@ -15,7 +15,7 @@ const Filters = ({
   jobFilter = false,
 }: {
   filters: FilterProps[];
-  jobFilter: boolean;
+  jobFilter?: boolean;
 }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
