@@ -210,8 +210,6 @@ nextjs14-devoverflow/
   - [Deploy to production (manual)](#-deploy-to-production-manual)
   - [Deploy on Vercel (recommended)](#-deploy-on-vercel-recommended)
   - [Deploy on Netlify](#-deploy-on-netlify)
-- [Features](#-features)
-- [Screenshots](#-screenshots)
 - [Contributing](#-contributing)
   - [Bug / Feature Request](#-bug--feature-request)
 - [Acknowledgements](#-acknowledgements)
