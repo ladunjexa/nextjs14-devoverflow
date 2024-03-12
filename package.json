@@ -26,7 +26,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-tailwindcss": "^3.14.2",
-    "html-react-parser": "^5.0.2",
+    "html-react-parser": "^5.1.6",
     "lucide-react": "^0.331.0",
     "mongodb": "^6.3.0",
     "mongoose": "^7.6.3",
@@ -38,7 +38,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.47.0",
     "svix": "^1.18.0",
-    "tailwind-merge": "^2.0.0",
+    "tailwind-merge": "^2.2.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
