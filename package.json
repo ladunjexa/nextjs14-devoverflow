@@ -37,7 +37,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.50.1",
-    "svix": "^1.18.0",
+    "svix": "^1.19.0",
     "tailwind-merge": "^2.2.1",
     "zod": "^3.22.4"
   },
